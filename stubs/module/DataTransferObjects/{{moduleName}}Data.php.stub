@@ -1,0 +1,13 @@
+<?php
+
+namespace Modules\{{moduleName}}\DataTransferObjects;
+
+class {{moduleName}}Data
+{
+    public function __construct(
+           public readonly string $name,
+    )
+   {
+
+   }
+}
