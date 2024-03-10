@@ -5,11 +5,17 @@ namespace Modules\InsuranceQuote\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Modules\InsuranceQuote\Actions\InsuranceQuoteAction;
+use Modules\InsuranceQuote\DataTransferObjects\InsuranceQuoteData;
 use Modules\InsuranceQuote\Http\Requests\InsuranceQuoteFirstStepRequest;
+use Modules\InsuranceQuote\Http\Requests\InsuranceQuoteRequest;
+use Modules\InsuranceQuote\Models\InsuranceQuote;
 
 class InsuranceQuoteController extends Controller
 {
-    public function __construct()
+    public function __construct(
+        private readonly InsuranceQuoteAction $insuranceQuoteAction
+    )
     {
     }
 
@@ -23,9 +29,15 @@ class InsuranceQuoteController extends Controller
         return to_route('insurance-quote.index');
     }
 
-    public function store(Request $request)
+    public function store(InsuranceQuoteRequest $request)
     {
-        dd($request->all());
+        $this->upsert($request);
+    }
+
+    public function upsert(InsuranceQuoteRequest $request)
+    {
+        $quoteData = new InsuranceQuoteData(...$request->validated());
+        $this->insuranceQuoteAction->execute($quoteData);
     }
 
     public function show($id)

@@ -14,7 +14,18 @@ class InsuranceQuoteRequest extends FormRequest
     public function rules()
     {
         return [
-            // Definir las reglas de validación para los campos del formulario
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'email' => ['required', 'email'],
+            'phone' => ['required', 'numeric'],
+            'contact_preference' => ['required'],
+            'selectedOptions' => ['required', 'array'],
+            'street_address' => ['required'],
+            'ste_apt' => ['required'],
+            'city' => ['required'],
+            'state' => ['required'],
+            'zipcode' => ['required'],
+
         ];
     }
 }
