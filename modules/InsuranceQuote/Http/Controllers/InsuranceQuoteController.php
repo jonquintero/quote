@@ -5,6 +5,7 @@ namespace Modules\InsuranceQuote\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Modules\InsuranceQuote\Http\Requests\InsuranceQuoteFirstStepRequest;
 
 class InsuranceQuoteController extends Controller
 {
@@ -17,18 +18,9 @@ class InsuranceQuoteController extends Controller
         return Inertia::render('InsuranceQuote/FormStepOne');
     }
 
-    public function firstStep(Request $request)
+    public function firstStep(InsuranceQuoteFirstStepRequest $request)
     {
-
-        $request->validate([
-            'first_name' => ['required'],
-            'last_name' => ['required'],
-            'email' => ['required'],
-            'phone' => ['required', 'numeric'],
-            'contact_preference' => ['required'],
-        ]);
-        //return to_route('insurance-quote.index');
-       // return redirect()->back()->withErrors($request->validate);
+        return to_route('insurance-quote.index');
     }
 
     public function store(Request $request)

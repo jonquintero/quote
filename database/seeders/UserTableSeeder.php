@@ -13,7 +13,9 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            'name'           => 'Admin',
+            'first_name'           => 'Admin',
+            'last_name'     => 'Jon',
+            'phone' => '123456789',
             'email'          => 'admin@admin.com',
             'password'       => '$2y$10$imU.Hdz7VauIT3LIMCMbsOXvaaTQg6luVqkhfkBcsUd.SJW2XSRKO',
             'remember_token' => null,

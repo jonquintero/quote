@@ -9,7 +9,11 @@ class InsuranceQuoteFirstStepRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'email' => ['required', 'email'],
+            'phone' => ['required', 'numeric'],
+            'contact_preference' => ['required'],
         ];
     }
 
