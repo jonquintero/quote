@@ -45,7 +45,7 @@ import FormStepTwo from '@/Pages/InsuranceQuote/FormStepTwo.vue'
 const options = [
     { value: 1, label: 'Home', icon: '/images/home.png' },
     { value: 2, label: 'Auto', icon: '/images/auto.png' },
-    { value: 3, label: 'Home', icon: '/images/home.png' },
+    { value: 3, label: 'Recreational Vehicle', icon: '/images/auto.png' },
 ];
 const props = defineProps({
     formData: {
