@@ -3,6 +3,10 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
+use Modules\InsuranceQuote\Http\Controllers\InsuranceQuoteController;
+use Modules\InsuranceQuote\Http\Requests\InsuranceQuoteFirstStepRequest;
 use Tests\TestCase;
 use Inertia\Testing\AssertableInertia;
 use Modules\InsuranceQuote\Models\InsuranceQuote;
@@ -68,5 +72,26 @@ class InsuranceQuoteControllerTest extends TestCase
             'zipcode' => $insuranceQuote->zipcode,
             'deleted_at' => $insuranceQuote->deleted_at,
         ];
+    }
+
+
+    public function testFirstStep()
+    {
+        // Arrange
+        $request = new InsuranceQuoteFirstStepRequest([
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'johndoe@example.com',
+            'phone' => '1234567890',
+            'contact_preference' => 'Email',
+        ]);
+
+        $controller = app()->make(InsuranceQuoteController::class);
+
+        // Act
+        $response = $controller->firstStep($request);
+
+        // Assert
+        $this->assertInstanceOf(RedirectResponse::class, $response);
     }
 }
