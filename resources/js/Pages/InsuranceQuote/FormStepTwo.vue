@@ -74,7 +74,6 @@ const form = useForm({
     selectedOptions: ref(props.formData ? props.formData.selectedOptions || [] : []),
 });
 
-alert(JSON.stringify(props.formData));
 
 
 function submitForm() {
