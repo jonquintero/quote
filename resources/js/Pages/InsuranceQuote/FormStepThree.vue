@@ -18,7 +18,7 @@
 
                                 <select-input v-model="form.state" :error="form.errors.state" class="pb-8 pr-6 w-full" label="State" required>
                                     <option disabled selected value="">Please select</option>
-                                    <option v-for="contact in contact_preferences" :value="contact">{{ contact }}</option>
+                                    <option v-for="state in states" :value="state">{{ state }}</option>
                                 </select-input>
                                 <text-input v-model="form.zipcode" :error="form.errors.zipcode" class="pb-8 pr-6 w-full" label="Zip Code" required />
 
@@ -49,7 +49,7 @@ import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import FormStepTwo from "@/Pages/InsuranceQuote/FormStepTwo.vue";
 
-const contact_preferences = ['Email', 'Phone']
+const states = ['CA', 'TX', 'FL', 'NY']
 
 const props = defineProps({
     formData: {
