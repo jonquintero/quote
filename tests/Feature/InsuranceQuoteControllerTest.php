@@ -77,7 +77,7 @@ class InsuranceQuoteControllerTest extends TestCase
 
     public function testFirstStep()
     {
-        // Arrange
+
         $request = new InsuranceQuoteFirstStepRequest([
             'first_name' => 'John',
             'last_name' => 'Doe',
@@ -88,10 +88,8 @@ class InsuranceQuoteControllerTest extends TestCase
 
         $controller = app()->make(InsuranceQuoteController::class);
 
-        // Act
         $response = $controller->firstStep($request);
 
-        // Assert
         $this->assertInstanceOf(RedirectResponse::class, $response);
     }
 }
