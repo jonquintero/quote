@@ -3,11 +3,11 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+use Inertia\Testing\AssertableInertia;
 use Modules\InsuranceQuote\Models\InsuranceQuote;
 use Modules\User\Models\User;
-use Tests\TestCase;
-use Inertia\Testing\Assert;
+use Laravel\Sanctum\Sanctum;
 
 class InsuranceQuoteControllerTest extends TestCase
 {
@@ -17,6 +17,8 @@ class InsuranceQuoteControllerTest extends TestCase
     {
         // Arrange
         $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $insuranceQuote1 = InsuranceQuote::factory()->create([
             'user_id' => $user->id,
             'contact_preference' => 'Email',
@@ -31,39 +33,40 @@ class InsuranceQuoteControllerTest extends TestCase
             'user_id' => $user->id,
             'contact_preference' => 'Phone',
             'street_address' => '456 Elm St',
-            'ste_apt' => null,
+            'ste_apt' => 'Apt 789',
             'city' => 'City',
             'state' => 'State',
             'zipcode' => '67890',
-            'deleted_at' => now(),
+            'deleted_at' => null,
         ]);
 
         // Act
-        $response = $this->actingAs($user)
-            ->get(route('insurance-quotes.index'));
+        $response = $this->get(route('insurance-quote.index'));
 
         // Assert
-        $response->assertInertia(function (Assert $page) use ($insuranceQuote1, $insuranceQuote2) {
+        $response->assertOk();
+
+        $response->assertInertia(function (AssertableInertia $page) use ($insuranceQuote1, $insuranceQuote2) {
             $page->component('InsuranceQuote/Index')
-                ->has('filters', ['search' => null, 'trashed' => null])
-                ->has('insuranceQuotes', 2, function (Assert $insuranceQuotes) use ($insuranceQuote1, $insuranceQuote2) {
-                    $insuranceQuotes->where('id', $insuranceQuote1->id)
-                        ->where('contact_preference', $insuranceQuote1->contact_preference)
-                        ->where('street_address', $insuranceQuote1->street_address)
-                        ->where('ste_apt', $insuranceQuote1->ste_apt)
-                        ->where('city', $insuranceQuote1->city)
-                        ->where('state', $insuranceQuote1->state)
-                        ->where('zipcode', $insuranceQuote1->zipcode)
-                        ->where('deleted_at', null);
-                    $insuranceQuotes->where('id', $insuranceQuote2->id)
-                        ->where('contact_preference', $insuranceQuote2->contact_preference)
-                        ->where('street_address', $insuranceQuote2->street_address)
-                        ->where('ste_apt', $insuranceQuote2->ste_apt)
-                        ->where('city', $insuranceQuote2->city)
-                        ->where('state', $insuranceQuote2->state)
-                        ->where('zipcode', $insuranceQuote2->zipcode)
-                        ->where('deleted_at', now());
-                });
+                ->where('filters', ['search' => null, 'trashed' => null])
+                ->where('insuranceQuotes', [
+                    $this->formatInsuranceQuote($insuranceQuote1),
+                    $this->formatInsuranceQuote($insuranceQuote2),
+                ]);
         });
+    }
+
+    private function formatInsuranceQuote(InsuranceQuote $insuranceQuote)
+    {
+        return [
+            'id' => $insuranceQuote->id,
+            'contact_preference' => $insuranceQuote->contact_preference,
+            'street_address' => $insuranceQuote->street_address,
+            'ste_apt' => $insuranceQuote->ste_apt,
+            'city' => $insuranceQuote->city,
+            'state' => $insuranceQuote->state,
+            'zipcode' => $insuranceQuote->zipcode,
+            'deleted_at' => $insuranceQuote->deleted_at,
+        ];
     }
 }

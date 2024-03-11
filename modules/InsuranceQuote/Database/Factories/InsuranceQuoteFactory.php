@@ -5,24 +5,22 @@ namespace Modules\InsuranceQuote\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\InsuranceQuote\Models\InsuranceQuote;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
- */
+
 class InsuranceQuoteFactory extends Factory
 {
     protected $model = InsuranceQuote::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'user_id' => null,
             'contact_preference' => 'Phone',
             'street_address' => $this->faker->streetAddress,
-            'ste_apt' => null,
+            'ste_apt' => "apt 123",
             'city' => 'City',
             'state' => 'State',
             'zipcode' => '67890',
-            'deleted_at' => now(),
+            'deleted_at' => null,
         ];
     }
 }

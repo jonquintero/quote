@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\InsuranceQuote\Database\Factories\InsuranceQuoteFactory;
 use Modules\User\Models\User;
 
 class InsuranceQuote extends Model
@@ -22,6 +23,11 @@ class InsuranceQuote extends Model
     protected $hidden = [
         // Lista de atributos ocultos
     ];
+
+    protected static function newFactory(): InsuranceQuoteFactory
+    {
+        return new InsuranceQuoteFactory();
+    }
 
     public function resolveRouteBinding($value, $field = null)
     {
