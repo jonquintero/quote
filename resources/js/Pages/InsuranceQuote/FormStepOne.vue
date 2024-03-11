@@ -77,12 +77,11 @@ function submitForm() {
         showThreeForm.value = false;
         showFirstForm.value = false;
     } else {
-        alert("Debe seleccionar una opción");
+        alert("Select a least one option");
     }
 }
 
 function handleFormData(formData) {
-    // Emitir el evento `form-data` con los datos del formulario
-    $emit('form-data', formData);
+      $emit('form-data', formData);
 }
 </script>

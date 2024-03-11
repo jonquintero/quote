@@ -4,12 +4,7 @@
     <h1 class="mb-8 text-3xl font-bold">Users</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
-        <!--<label class="block text-gray-700">Role:</label>
-        <select v-model="form.role" class="form-select mt-1 w-full">
-          <option :value="null" />
-          <option value="user">User</option>
-          <option value="owner">Owner</option>
-        </select>-->
+
         <label class="block mt-4 text-gray-700">Trashed:</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option :value="null" />

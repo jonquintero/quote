@@ -23,6 +23,34 @@ class InsuranceQuote extends Model
         // Lista de atributos ocultos
     ];
 
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
+    }
+
+    public function scopeFilter($query, array $filters): void
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->whereAny([
+                'contact_preference',
+                'street_address',
+                'ste_apt',
+                'city',
+                'state',
+                'zipcode',
+            ],
+                'LIKE',
+                "%$search%");
+
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } elseif ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

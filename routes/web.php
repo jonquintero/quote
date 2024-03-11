@@ -6,7 +6,7 @@ use Modules\InsuranceQuote\Http\Controllers\InsuranceQuoteController;
 
 
 Route::get('/', function () {
-    return redirect()->route('insurance-quote.index');
+    return redirect()->route('insurance-quote.create');
 
 });
 Route::post('/insurance-quote/first-step', [InsuranceQuoteController::class, 'firstStep'])->name('insurance-quote.first.step');
