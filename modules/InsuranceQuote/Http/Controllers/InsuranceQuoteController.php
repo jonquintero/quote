@@ -31,13 +31,23 @@ class InsuranceQuoteController extends Controller
 
     public function store(InsuranceQuoteRequest $request)
     {
+
         $this->upsert($request);
+
+        return redirect()->route('insurance-quote.done')
+            ->with('success', 'Insurance Quote Done!');
     }
 
     public function upsert(InsuranceQuoteRequest $request)
     {
+
         $quoteData = new InsuranceQuoteData(...$request->validated());
         $this->insuranceQuoteAction->execute($quoteData);
+    }
+
+    public function done()
+    {
+        return Inertia::render('InsuranceQuote/InsuranceDone');
     }
 
     public function show($id)

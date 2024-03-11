@@ -5,10 +5,12 @@ namespace Modules\User\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\InsuranceQuote\Models\InsuranceQuote;
 use Modules\User\Database\Factories\UserFactory;
 
 class User extends Authenticatable
@@ -21,7 +23,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'phone',
         'email',
         'password',
     ];
@@ -74,5 +78,10 @@ class User extends Authenticatable
                 $query->onlyTrashed();
             }
         });
+    }
+
+    public function insuranceQuote(): HasMany
+    {
+        return $this->hasMany(InsuranceQuote::class, 'user_id', 'id');
     }
 }
